@@ -9,7 +9,7 @@ class Doom(object):
     def __init__(self):
         pass
 
-    def initialize_game():
+    def initialize_game(self):
         print("Initializing doom...")
         game = vzd.DoomGame()
         game.load_config(config_file_path)

@@ -11,13 +11,13 @@ target_net_update_steps = 1000
 batch_size = 64
 
 # Training regime 
-test_episodes_per_epoch = 100
+test_episodes_per_epoch = 5
 
 num_train_epochs = 5
-learning_steps_per_epoch = 2000
+learning_steps_per_epoch = 8400
 
 # Other parameters
-frames_per_action = 12
+frames_per_action = 10
 
 class DQN(object):
 
@@ -64,25 +64,25 @@ class DQN(object):
             print("Results: mean: %.1f±%.1f," % (train_scores.mean(), train_scores.std()), \
                     "min: %.1f," % train_scores.min(), "max: %.1f," % train_scores.max())
 
-            test(test_episodes_per_epoch, game, agent)
+            self.test(test_episodes_per_epoch, game, agent)
             print("Total elapsed time: %.2f minutes" % ((time() - time_start) / 60.0))
 
 
-def test(self, test_episodes_per_epoch, game, agent):
-    test_scores = []
+    def test(self, test_episodes_per_epoch, game, agent):
+        test_scores = []
 
-    print("\nTesting...")
-    for test_episode in trange(test_episodes_per_epoch, leave=False):
-        game.new_episode()
-        while not game.is_episode_finished():
-            state = preprocess(game.get_state().screen_buffer)
-            best_action_index = agent.choose_action(state)
-            game.make_action(self.actions[best_action_index], frames_per_action)
+        print("\nTesting...")
+        for test_episode in trange(test_episodes_per_epoch, leave=False):
+            game.new_episode()
+            while not game.is_episode_finished():
+                state = preprocess(game.get_state().screen_buffer)
+                best_action_index = agent.choose_action(state)
+                game.make_action(self.actions[best_action_index], frames_per_action)
 
-        r = game.get_total_reward()
-        test_scores.append(r)
+            r = game.get_total_reward()
+            test_scores.append(r)
 
-    test_scores = np.array(test_scores)
-    print("Results: mean: %.1f±%.1f," % (
-        test_scores.mean(), test_scores.std()), "min: %.1f" % test_scores.min(),
-          "max: %.1f" % test_scores.max())
+        test_scores = np.array(test_scores)
+        print("Results: mean: %.1f±%.1f," % (
+            test_scores.mean(), test_scores.std()), "min: %.1f" % test_scores.min(),
+            "max: %.1f" % test_scores.max())
