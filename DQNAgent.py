@@ -15,7 +15,7 @@ load = False
 model_savefolder = "./model"
 
 class DQNAgent:
-    def __init__(self, num_actions=8, epsilon=1, epsilon_min=0.1, epsilon_decay=0.9995, load=load):
+    def __init__(self, num_actions=3, epsilon=1, epsilon_min=0.1, epsilon_decay=0.9995, load=load):
         self.epsilon = epsilon
         self.epsilon_min = epsilon_min
         self.epsilon_decay = epsilon_decay

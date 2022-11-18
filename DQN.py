@@ -14,7 +14,7 @@ batch_size = 64
 test_episodes_per_epoch = 5
 
 num_train_epochs = 5
-learning_steps_per_epoch = 8400
+learning_steps_per_epoch = 200
 
 # Other parameters
 frames_per_action = 10

@@ -15,8 +15,8 @@ tf.compat.v1.enable_eager_execution()
 
 replay_memory_size = 10000
 
-frames_per_action = 12
-episodes_to_watch = 20
+frames_per_action = 10
+episodes_to_watch = 5
 
 save_model = True
 load = False
