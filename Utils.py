@@ -4,13 +4,9 @@ import skimage.color
 import skimage.transform
 from random import sample
 
-# NN learning settings
-batch_size = 64
-
-resolution = (30, 45)
 
 def preprocess(img):
-    img = skimage.transform.resize(img, resolution)
+    img = skimage.transform.resize(img, (30, 45))
     img = img.astype(np.float32)
     img = np.expand_dims(img, axis=-1)
    
@@ -35,9 +31,9 @@ def extractDigits(*argv):
 
 
 def get_samples(memory):
-    if len(memory) < batch_size:
+    if len(memory) < 64:
         sample_size = len(memory)
     else:
-        sample_size = batch_size
+        sample_size = 64
 
     return sample(memory, sample_size)

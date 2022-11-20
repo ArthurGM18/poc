@@ -7,7 +7,7 @@ class CNN(Model):
     def __init__(self, num_actions):
         super(CNN,self).__init__()
         self.conv1 = Sequential([
-                                Conv2D(8, kernel_size=6, strides=3, input_shape=(30,45,1)),
+                                Conv2D(8, kernel_size=6, strides=3, input_shape=(30, 45, 3)),
                                 BatchNormalization(),
                                 ReLU()
                                 ])

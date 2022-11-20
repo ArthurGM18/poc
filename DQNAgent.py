@@ -1,30 +1,32 @@
 from CNN import CNN
 from Utils import extractDigits, split_tuple
 
+import json
+import platform
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import SGD
 
-# Q-learning settings
-learning_rate = 0.00025
-discount_factor = 0.99
+if platform.system() == 'Windows': 
+    CONFIG_FILE = 'settings\\configs.json'
+else:
+    CONFIG_FILE = 'settings/configs.json'
 
-save_model = True
-load = False
+with open(CONFIG_FILE, 'r') as f:
+    data = json.load(f)
 
-model_savefolder = "./model"
 
 class DQNAgent:
-    def __init__(self, num_actions=3, epsilon=1, epsilon_min=0.1, epsilon_decay=0.9995, load=load):
-        self.epsilon = epsilon
-        self.epsilon_min = epsilon_min
-        self.epsilon_decay = epsilon_decay
-        self.discount_factor = discount_factor
+    def __init__(self, num_actions):
+        self.epsilon = data['DQN']['epsilon']
+        self.epsilon_min = data['DQN']['epsilon_min']
+        self.epsilon_decay = data['DQN']['epsilon_decay']
+        self.discount_factor = data['DQN']['discount_factor']
+        self.optimizer = SGD(data['DQN']['learning_rate'])
         self.num_actions = num_actions
-        self.optimizer = SGD(learning_rate)
 
-        if load:
-            self.dqn = tf.keras.models.load_model(model_savefolder)
+        if data['model']['load']:
+            self.dqn = tf.keras.models.load_model(data['model']['model_savefolder'])
         else:
             self.dqn = CNN(self.num_actions)
             self.target_net = CNN(self.num_actions)
@@ -36,7 +38,7 @@ class DQNAgent:
 
     def choose_action(self, state):
         if self.epsilon < np.random.uniform(0,1):
-            action = int(tf.argmax(self.dqn(tf.reshape(state, (1,30,45,1))), axis=1))
+            action = int(tf.argmax(self.dqn(tf.reshape(state, (1,30,45,3))), axis=1))
         else:
             action = np.random.choice(range(self.num_actions), 1)[0]
 

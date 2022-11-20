@@ -1,7 +1,15 @@
-import os
 import vizdoom as vzd
 
-config_file_path = 'scenarios/MAPA02.cfg'
+import json
+import platform
+
+if platform.system() == 'Windows': 
+    CONFIG_FILE = 'settings\\configs.json'
+else:
+    CONFIG_FILE = 'settings/configs.json'
+
+with open(CONFIG_FILE, 'r') as f:
+    data = json.load(f)
 
 
 class Doom(object):
@@ -12,11 +20,8 @@ class Doom(object):
     def initialize_game(self):
         print("Initializing doom...")
         game = vzd.DoomGame()
-        game.load_config(config_file_path)
-        game.set_window_visible(False)
-        game.set_mode(vzd.Mode.PLAYER)
-        game.set_screen_format(vzd.ScreenFormat.GRAY8)
-        game.set_screen_resolution(vzd.ScreenResolution.RES_640X480)
+        game.load_config(f"{data['DoomGame']['config_file_path']}/{data['DoomGame']['map_name']}")
+        ##game.set_screen_format(vzd.ScreenFormat.GRAY8)
         game.init()
         print("Doom initialized.")
 

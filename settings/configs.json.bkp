@@ -1,0 +1,32 @@
+{
+    "DoomGame": {
+        "map_name": "MAPA01.cfg",
+        "config_file_path": "scenarios/",
+        "frames_per_action": 10,
+        "episodes_to_watch": 5
+    },
+
+    "model": {
+        "save_model": false,
+        "load": false,
+        "skip_learning": false,
+        "watch": true,
+        "model_savefolder" : "./model"
+    },
+
+    "DQN": {
+        "replay_memory_size": 10000,
+        "target_net_update_steps": 1000,
+        "learning_rate": 0.00025,
+        "discount_factor": 0.99,
+        "epsilon": 1,
+        "epsilon_min": 0.1,
+        "epsilon_decay": 0.9995
+    },
+
+    "training": {
+        "test_episodes_per_epoch": 5,
+        "learning_steps_per_epoch": 200,
+        "num_train_epochs": 5
+    }
+}
